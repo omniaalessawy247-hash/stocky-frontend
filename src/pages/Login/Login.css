@@ -1,0 +1,345 @@
+.login-page {
+  --lp-navy-950: #0b1220;
+  --lp-navy-900: #101a30;
+  --lp-navy-800: #16233d;
+  --lp-teal: #2dd4bf;
+  --lp-teal-dark: #14b8a6;
+  --lp-amber: #f6a821;
+  --lp-amber-dark: #d98c0f;
+  --lp-violet: #a78bfa;
+  --lp-violet-dark: #8b5cf6;
+  --lp-ink: #eef2f8;
+  --lp-ink-muted: rgba(238, 242, 248, 0.6);
+  --lp-glass: rgba(255, 255, 255, 0.06);
+  --lp-glass-border: rgba(255, 255, 255, 0.12);
+
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow: hidden;
+  background: radial-gradient(120% 120% at 20% 15%, var(--lp-navy-800) 0%, var(--lp-navy-950) 60%);
+}
+
+/* ---------------------------------- */
+/* Animated background                */
+/* ---------------------------------- */
+
+.login-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at 50% 40%, black 10%, transparent 75%);
+}
+
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.35;
+  animation: blobPulse 12s ease-in-out infinite;
+}
+
+.bg-blob-teal {
+  width: 380px;
+  height: 380px;
+  left: -80px;
+  top: -60px;
+  background: var(--lp-teal);
+  animation-delay: 0s;
+}
+
+.bg-blob-amber {
+  width: 320px;
+  height: 320px;
+  right: -60px;
+  top: 10%;
+  background: var(--lp-amber);
+  animation-delay: -4s;
+}
+
+.bg-blob-violet {
+  width: 360px;
+  height: 360px;
+  left: 20%;
+  bottom: -140px;
+  background: var(--lp-violet);
+  animation-delay: -8s;
+}
+
+@keyframes blobPulse {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.32; }
+  50% { transform: translate3d(20px, -24px, 0) scale(1.12); opacity: 0.45; }
+}
+
+.bg-crate {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  animation: crateDrift linear infinite;
+}
+
+.bg-crate-1 { left: 12%; bottom: -60px; width: 30px; height: 30px; animation-duration: 18s; animation-delay: 0s; }
+.bg-crate-2 { left: 78%; bottom: -60px; width: 44px; height: 44px; animation-duration: 24s; animation-delay: -6s; }
+.bg-crate-3 { left: 46%; bottom: -60px; width: 24px; height: 24px; animation-duration: 15s; animation-delay: -10s; }
+.bg-crate-4 { left: 88%; bottom: -60px; width: 36px; height: 36px; animation-duration: 21s; animation-delay: -3s; }
+
+@keyframes crateDrift {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  8% { opacity: 0.5; }
+  92% { opacity: 0.5; }
+  100% { transform: translateY(-115vh) rotate(75deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-blob, .bg-crate { animation: none; }
+}
+
+/* ---------------------------------- */
+/* Card                               */
+/* ---------------------------------- */
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 380px;
+  background: var(--lp-glass);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--lp-glass-border);
+  border-radius: 24px;
+  padding: 38px 30px;
+  text-align: center;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
+}
+
+.login-logo-wrap {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(45, 212, 191, 0.18), rgba(246, 168, 33, 0.18));
+  border: 1px solid var(--lp-glass-border);
+}
+
+.login-logo {
+  width: 38px;
+  height: 38px;
+  display: block;
+}
+
+.login-title {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--lp-ink);
+  margin-bottom: 4px;
+}
+
+.login-subtitle {
+  font-size: 13px;
+  color: var(--lp-ink-muted);
+  margin-bottom: 24px;
+}
+
+/* ---------------------------------- */
+/* Role selector                      */
+/* ---------------------------------- */
+
+.role-selector {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.role-chip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--lp-glass-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--lp-ink-muted);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.18s ease, color 0.18s ease, background-color 0.18s ease, transform 0.18s ease;
+}
+
+.role-chip:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.role-chip-icon {
+  display: flex;
+}
+
+.role-chip-teal.role-chip-active {
+  border-color: var(--lp-teal);
+  color: var(--lp-teal);
+  background: rgba(45, 212, 191, 0.14);
+}
+
+.role-chip-amber.role-chip-active {
+  border-color: var(--lp-amber);
+  color: var(--lp-amber);
+  background: rgba(246, 168, 33, 0.14);
+}
+
+.role-chip-violet.role-chip-active {
+  border-color: var(--lp-violet);
+  color: var(--lp-violet);
+  background: rgba(167, 139, 250, 0.14);
+}
+
+/* ---------------------------------- */
+/* Form                               */
+/* ---------------------------------- */
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--lp-ink-muted);
+  pointer-events: none;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 13px 40px 13px 40px;
+  border-radius: 12px;
+  border: 1px solid var(--lp-glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 14px;
+  color: var(--lp-ink);
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.input-group input::placeholder {
+  color: rgba(238, 242, 248, 0.35);
+}
+
+.input-group input:focus {
+  border-color: var(--lp-teal);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.18);
+}
+
+.input-toggle {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--lp-ink-muted);
+  cursor: pointer;
+  display: flex;
+}
+
+.login-error {
+  font-size: 12.5px;
+  color: #fca5a5;
+  background: rgba(248, 113, 113, 0.12);
+  border: 1px solid rgba(248, 113, 113, 0.25);
+  padding: 9px 12px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ---------------------------------- */
+/* Submit button                      */
+/* ---------------------------------- */
+
+.login-submit {
+  margin-top: 4px;
+  padding: 13px;
+  border-radius: 12px;
+  border: none;
+  color: #0b1220;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--lp-teal) 0%, var(--lp-amber) 100%);
+  background-size: 160% 160%;
+  background-position: 0% 50%;
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-position 0.4s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 24px -8px rgba(45, 212, 191, 0.45);
+}
+
+.login-submit-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.login-submit:hover:not(:disabled) {
+  background-position: 100% 50%;
+  box-shadow: 0 12px 28px -6px rgba(246, 168, 33, 0.5);
+}
+
+/* Fixed: button stays fully opaque and colorful while submitting,
+   instead of fading to transparent. A gentle pulse communicates
+   the busy state without losing the brand color. */
+.login-submit:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.login-submit-busy {
+  animation: submitPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes submitPulse {
+  0%, 100% { box-shadow: 0 10px 24px -8px rgba(45, 212, 191, 0.45); }
+  50% { box-shadow: 0 10px 30px -4px rgba(246, 168, 33, 0.55); }
+}
+
+.login-spinner {
+  width: 17px;
+  height: 17px;
+  border: 2px solid rgba(11, 18, 32, 0.35);
+  border-top-color: #0b1220;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --color-primary: #4338ca;
+  --color-primary-soft: #6366f1;
+  --color-ink: #0a0e1a;
+  --color-accent-warm: #d97706;
+  --color-accent-cool: #0891b2;
+  --color-success: #059669;
+  --color-danger: #dc2626;
+
+  --color-bg: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-text: #0f1729;
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
+  --color-border: #e5e7eb;
+  --color-border-soft: #f0f1f3;
+}
+
+.dark {
+  /* رمادي كحلي دافئ بدل الأسود الخالص — أخف بكتير من قبل */
+  --color-bg: #16181f;
+  --color-surface: #1e212a;
+  --color-surface-raised: #262a35;
+
+  /* أبيض مكسور مش أبيض ناصع، أريح للعين بالليل */
+  --color-text: #e9eaee;
+  --color-text-muted: #a8adba;
+  --color-text-faint: #7d8394;
+
+  --color-border: #343945;
+  --color-border-soft: #2a2e39;
+
+  /* الألوان الأساسية تبقى أسطع شوية عشان تفضل واضحة وحيوية على الخلفية الغامقة */
+  --color-primary: #6366f1;
+  --color-primary-soft: #818cf8;
+  --color-accent-warm: #f59e0b;
+  --color-accent-cool: #22d3ee;
+  --color-success: #34d399;
+  --color-danger: #f87171;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.25s ease, color 0.25s ease;
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { scrollbar-width: thin; box-sizing: border-box; }

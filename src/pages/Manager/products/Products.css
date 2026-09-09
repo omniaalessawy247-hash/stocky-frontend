@@ -1,0 +1,777 @@
+.products-page {
+  max-width: 1160px;
+}
+
+.page-eyebrow {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  margin-bottom: 8px;
+}
+
+.page-title {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.page-subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+.products-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+/*
+  NOTE ON SPECIFICITY: Tailwind's Preflight base layer resets
+  `button, [type='button'], [type='reset'], [type='submit']` to
+  `background-color: transparent`. That selector has the same specificity
+  as a plain class selector, so depending on stylesheet load order it can
+  win and make our buttons render with an invisible (transparent)
+  background — text stays white, background disappears, and the button
+  looks "gone". Every button rule below is qualified with the `button`
+  tag (e.g. `button.btn-primary`) to guarantee higher specificity than
+  Tailwind's reset, regardless of load order, and `!important` is added
+  on the properties Tailwind resets (background-color, border) as a
+  second safety net.
+*/
+
+button.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 18px;
+  border: none !important;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-primary), color-mix(in srgb, var(--color-primary) 75%, #8b5cf6)) !important;
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 20px -10px color-mix(in srgb, var(--color-primary) 65%, transparent);
+  transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+button.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.06);
+  box-shadow: 0 12px 24px -8px color-mix(in srgb, var(--color-primary) 75%, transparent);
+}
+button.btn-primary:active:not(:disabled) { transform: scale(0.96); }
+button.btn-primary:disabled { opacity: 0.65; cursor: not-allowed; box-shadow: none; }
+
+button.btn-secondary {
+  padding: 11px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border) !important;
+  background-color: transparent !important;
+  color: var(--color-text-muted) !important;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+}
+
+button.btn-secondary:hover { background-color: var(--color-surface-raised) !important; border-color: var(--color-text-faint) !important; }
+button.btn-secondary:active:not(:disabled) { transform: scale(0.96); }
+
+/* Spinner */
+
+.spin {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+   Stat cards — each metric gets its own tinted, colored card
+   (icon + big number + label) instead of a thin grey chip row,
+   so the header reads as lively rather than flat.
+   ============================================================ */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background-color: color-mix(in srgb, var(--stat-accent) 7%, var(--color-surface));
+  border: 1px solid color-mix(in srgb, var(--stat-accent) 20%, transparent);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--stat-accent) 40%, transparent);
+  box-shadow: 0 14px 26px -16px color-mix(in srgb, var(--stat-accent) 55%, transparent);
+}
+
+.stat-card-indigo { --stat-accent: var(--color-primary); }
+.stat-card-teal   { --stat-accent: #14b8a6; }
+.stat-card-amber  { --stat-accent: var(--color-accent-warm); }
+
+.stat-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background-color: color-mix(in srgb, var(--stat-accent) 18%, transparent);
+  color: var(--stat-accent);
+}
+
+.stat-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.stat-card-value {
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-card-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* Search */
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 380px;
+  margin-bottom: 18px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--color-primary);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 11px 14px 11px 40px !important;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-bar input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* Page-level alert (e.g. failed to load products) */
+
+.page-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background-color: color-mix(in srgb, var(--color-danger) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-danger) 25%, transparent);
+  color: var(--color-danger);
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.page-alert button {
+  margin-left: auto;
+  border: none !important;
+  background: none !important;
+  color: var(--color-danger) !important;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 12.5px;
+  transition: transform 0.12s ease;
+}
+.page-alert button:active { transform: scale(0.95); }
+
+/* Product grid */
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px;
+}
+
+.products-loading,
+.products-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px 0;
+  color: var(--color-text-faint);
+}
+
+.product-card {
+  border-radius: 20px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  border-color: color-mix(in srgb, var(--color-primary) 35%, var(--color-border));
+  box-shadow: 0 20px 36px -20px color-mix(in srgb, var(--color-primary) 35%, rgba(0, 0, 0, 0.3));
+}
+
+/* Taller image area with a soft tinted backdrop. object-fit: contain
+   guarantees the full photo is always visible — no more chopping off the
+   top/bottom of tall or non-square product photos like cover did. The
+   image gently fades + scales in on mount, and still gets a subtle
+   zoom on card hover. */
+.product-image-wrap {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--color-primary) 7%, transparent),
+    var(--color-surface-raised) 70%
+  );
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: product-image-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes product-image-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.06);
+}
+
+.product-image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-primary) 14%, transparent), var(--color-surface-raised));
+}
+
+.stock-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 5px 11px 5px 8px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.35);
+}
+
+.stock-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.stock-pill-ok {
+  background-color: color-mix(in srgb, var(--color-success) 26%, white 30%);
+  color: var(--color-success);
+}
+
+.stock-pill-low {
+  background-color: color-mix(in srgb, var(--color-accent-warm) 28%, white 30%);
+  color: var(--color-accent-warm);
+}
+
+.product-card-body { padding: 16px; }
+
+.product-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Meta as small colored chips instead of a faded, middot-joined line —
+   easier to scan and matches the colorful icon language used elsewhere
+   on the page (blue for the code, purple for the category). */
+.product-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.meta-chip-blue {
+  background-color: color-mix(in srgb, #3b82f6 14%, transparent);
+  color: #3b82f6;
+}
+
+.meta-chip-purple {
+  background-color: color-mix(in srgb, #8b5cf6 14%, transparent);
+  color: #8b5cf6;
+}
+
+.product-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.product-price {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--color-success);
+}
+
+.product-qty-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.product-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+button.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border) !important;
+  background-color: transparent !important;
+  color: var(--color-text-muted) !important;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+button.action-btn:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+  border-color: color-mix(in srgb, var(--color-primary) 35%, transparent) !important;
+  color: var(--color-primary) !important;
+}
+button.action-btn:active { transform: scale(0.95); }
+
+button.action-btn-danger {
+  color: var(--color-danger) !important;
+  border-color: color-mix(in srgb, var(--color-danger) 25%, transparent) !important;
+}
+
+button.action-btn-danger:hover {
+  background-color: color-mix(in srgb, var(--color-danger) 10%, transparent) !important;
+  border-color: color-mix(in srgb, var(--color-danger) 40%, transparent) !important;
+  color: var(--color-danger) !important;
+}
+
+/* Modal */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(8, 9, 13, 0.6);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+
+.modal-form {
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  background-color: var(--color-surface);
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.45);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--color-border-soft);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary) 10%, transparent),
+    color-mix(in srgb, #8b5cf6 6%, transparent) 60%,
+    transparent
+  );
+}
+
+.modal-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 13px;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    color-mix(in srgb, var(--color-primary) 65%, #8b5cf6)
+  );
+  color: #fff;
+  box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--color-primary) 70%, transparent);
+}
+
+.modal-header-text { flex: 1; }
+.modal-header-text h3 { font-size: 16.5px; font-weight: 700; color: var(--color-text); }
+.modal-header-text p { font-size: 12px; color: var(--color-text-muted); margin-top: 3px; }
+
+button.modal-close {
+  background: none !important;
+  border: none !important;
+  color: var(--color-text-muted) !important;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+button.modal-close:hover { background-color: var(--color-surface-raised) !important; color: var(--color-danger) !important; }
+button.modal-close:active { transform: scale(0.92); }
+
+.modal-scroll {
+  padding: 20px 24px 4px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ============================================================
+   Form sections — each logical group (photo / basic info /
+   pricing / stock) sits in its own gently tinted panel, keyed to
+   the same accent color as the fields inside it. This replaces
+   the old "one long grey column of inputs" look with clear,
+   colorful groupings, without turning into separate hard cards.
+   ============================================================ */
+
+.form-section {
+  padding: 14px;
+  border-radius: 16px;
+  background-color: color-mix(in srgb, var(--section-accent) 5%, var(--color-surface-raised));
+  border: 1px solid color-mix(in srgb, var(--section-accent) 14%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-section-photo   { --section-accent: #ec4899; }
+.form-section-basic   { --section-accent: #3b82f6; }
+.form-section-pricing { --section-accent: var(--color-success); }
+.form-section-stock   { --section-accent: var(--color-accent-warm); }
+
+.form-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--section-accent);
+}
+
+/* Photo upload row */
+
+.photo-upload {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/*
+  Square (not circular) preview with object-fit: contain, so a photo is
+  always shown in full — a circle + object-fit:cover was cropping most of
+  every non-square product photo. The light background fills any empty
+  space around non-square images instead of chopping them off.
+*/
+button.photo-upload-square {
+  width: 84px;
+  height: 84px;
+  min-width: 84px;
+  border-radius: 16px;
+  border: 1.5px dashed color-mix(in srgb, var(--section-accent) 45%, transparent) !important;
+  padding: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: color-mix(in srgb, var(--section-accent) 10%, transparent) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--section-accent) !important;
+  transition: filter 0.15s ease, transform 0.12s ease;
+}
+
+button.photo-upload-square:hover { filter: brightness(0.97); }
+button.photo-upload-square:active { transform: scale(0.96); }
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.photo-upload-text { flex: 1; min-width: 0; }
+
+.photo-upload-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.photo-upload-hint {
+  font-size: 11.5px;
+  color: var(--color-text-faint);
+  margin-top: 2px;
+}
+
+.photo-upload-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+button.photo-upload-link {
+  background: none !important;
+  border: none !important;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--section-accent) !important;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+
+button.photo-upload-link:hover { text-decoration: underline; }
+button.photo-upload-link:active { transform: scale(0.95); }
+
+button.photo-upload-remove { color: var(--color-danger) !important; }
+
+/* Form fields */
+
+.field-group { display: flex; flex-direction: column; gap: 6px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.field-label svg { color: var(--color-text-faint); flex-shrink: 0; }
+
+/*
+  input.form-input is tag-qualified (not just .form-input) so it beats
+  Tailwind Preflight's `input { padding: 0; }` reset, which has the exact
+  same specificity as a bare class selector. Without the tag qualifier +
+  !important here, Tailwind's reset can win depending on load order and
+  silently zero out the padding — which is exactly what was making the
+  icon sit on top of the placeholder text instead of beside it.
+*/
+input.form-input,
+input.form-input-icon {
+  width: 100%;
+  padding: 11px 13px !important;
+  border-radius: 11px;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  font-size: 13.5px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input.form-input:focus,
+input.form-input-icon:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+}
+
+/* Icon-in-input fields */
+
+.input-icon-wrap { position: relative; display: flex; align-items: center; }
+
+/* Colored icon badge instead of a plain grey glyph, sat to the left inside
+   the field. Vertically centered with a fixed transform so it never drifts
+   depending on input height. */
+.input-icon-badge {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 23px;
+  height: 23px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.badge-indigo { background-color: color-mix(in srgb, var(--color-primary) 16%, transparent); color: var(--color-primary); }
+.badge-blue   { background-color: color-mix(in srgb, #3b82f6 16%, transparent); color: #3b82f6; }
+.badge-green  { background-color: color-mix(in srgb, var(--color-success) 16%, transparent); color: var(--color-success); }
+.badge-purple { background-color: color-mix(in srgb, #8b5cf6 16%, transparent); color: #8b5cf6; }
+.badge-orange { background-color: color-mix(in srgb, var(--color-accent-warm) 18%, transparent); color: var(--color-accent-warm); }
+.badge-pink   { background-color: color-mix(in srgb, #ec4899 16%, transparent); color: #ec4899; }
+
+/* Extra left padding to clear the 23px badge + spacing, overriding the
+   base input padding above (same specificity trick: tag + class). */
+input.form-input-icon {
+  padding-left: 41px !important;
+}
+
+/* Stepper */
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 11px;
+  border: 1px solid color-mix(in srgb, var(--stepper-accent, var(--color-primary)) 25%, var(--color-border));
+  background-color: var(--color-surface);
+  padding: 4px;
+}
+
+.stepper-indigo { --stepper-accent: var(--color-primary); }
+.stepper-amber  { --stepper-accent: var(--color-accent-warm); }
+
+.stepper span {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text);
+  min-width: 30px;
+  text-align: center;
+}
+
+.stepper button {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: none !important;
+  background-color: color-mix(in srgb, var(--stepper-accent, var(--color-primary)) 12%, transparent) !important;
+  color: var(--stepper-accent, var(--color-primary)) !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+}
+
+.stepper button:hover { background-color: var(--stepper-accent, var(--color-primary)) !important; color: #fff !important; }
+.stepper button:active { transform: scale(0.9); }
+
+.form-error {
+  font-size: 12.5px;
+  color: var(--color-danger);
+  background-color: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  padding: 10px 12px;
+  border-radius: 11px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 16px 24px 22px;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.modal-footer .btn-secondary,
+.modal-footer .btn-primary { flex: 1; justify-content: center; }
+
+.modal-footer .btn-primary { gap: 8px; }

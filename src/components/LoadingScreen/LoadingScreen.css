@@ -1,0 +1,177 @@
+.loading-screen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--color-bg);
+}
+
+/* Soft ambient color drifting slowly in the background — barely noticeable,
+   just enough to keep the screen from feeling static and dead while data loads. */
+.loading-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.35;
+  pointer-events: none;
+  animation: drift 9s ease-in-out infinite;
+}
+
+.loading-glow-1 {
+  width: 380px;
+  height: 380px;
+  top: -120px;
+  left: -100px;
+  background: var(--color-primary);
+}
+
+.loading-glow-2 {
+  width: 320px;
+  height: 320px;
+  bottom: -100px;
+  right: -80px;
+  background: var(--color-accent-cool);
+  animation-delay: -4.5s;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -20px) scale(1.1); }
+}
+
+.loading-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ── Logo + rings ───────────────────────────────────── */
+
+.loading-rings {
+  position: relative;
+  width: 92px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-logo {
+  width: 56px;
+  height: 56px;
+  position: relative;
+  z-index: 5;
+  filter: drop-shadow(0 6px 16px color-mix(in srgb, var(--color-primary) 40%, transparent));
+}
+
+.ring {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary);
+  opacity: 0;
+  animation: ripple 2.4s ease-out infinite;
+}
+
+.ring-1 { animation-delay: 0s; }
+.ring-2 { animation-delay: 0.6s; border-color: var(--color-accent-cool); }
+.ring-3 { animation-delay: 1.2s; border-color: var(--color-accent-warm); }
+
+@keyframes ripple {
+  0% { transform: scale(0.85); opacity: 0.6; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+/* A slim conic-gradient ring that spins continuously around the logo — the
+   layer that reads as "actively working" rather than a one-off pulse. */
+.spin-ring {
+  position: absolute;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  z-index: 2;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    color-mix(in srgb, var(--color-primary) 80%, transparent) 60deg,
+    transparent 130deg,
+    color-mix(in srgb, var(--color-accent-cool) 80%, transparent) 230deg,
+    transparent 300deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+}
+
+/* ── Text ───────────────────────────────────────────── */
+
+.loading-brand {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(100deg, var(--color-primary), var(--color-accent-cool), var(--color-accent-warm), var(--color-primary));
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brand-shimmer 6s ease-in-out infinite;
+}
+
+@keyframes brand-shimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.loading-message {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* ── Progress bar ───────────────────────────────────── */
+
+.loading-bar-track {
+  position: relative;
+  width: 180px;
+  height: 4px;
+  border-radius: 999px;
+  background-color: var(--color-border);
+  overflow: hidden;
+}
+
+.loading-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-cool));
+}
+
+.loading-bar-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.65), transparent);
+  mix-blend-mode: overlay;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-glow,
+  .ring,
+  .spin-ring,
+  .loading-brand,
+  .loading-bar-shine,
+  .loading-logo {
+    animation: none !important;
+  }
+}
